@@ -1,9 +1,5 @@
 package com.javastack.spring.authentication.controllers;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Optional;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -72,16 +68,16 @@ public class HomeController {
         }
         
         //Checking if user is at least 10
-        Calendar currentDate = Calendar.getInstance();
-        currentDate.add(Calendar.YEAR, -10);
-        Date date = currentDate.getTime();
-        Date userBirthday = newUser.getBirthday();
-       
-        if(userBirthday.after(date)) {
-         	result.rejectValue("birthday", "tooYoung", "You must be at least 10 years old to register.");
-            model.addAttribute("newLogin", new LoginUser());
-            return "index.jsp";
-        }
+//        Calendar currentDate = Calendar.getInstance();
+//        currentDate.add(Calendar.YEAR, -10);
+//        Date date = currentDate.getTime();
+//        Date userBirthday = newUser.getBirthday();
+//       
+//        if(userBirthday.after(date)) {
+//         	result.rejectValue("birthday", "tooYoung", "You must be at least 10 years old to register.");
+//            model.addAttribute("newLogin", new LoginUser());
+//            return "index.jsp";
+//        }
         
 
         
@@ -89,12 +85,12 @@ public class HomeController {
         // TO-DO Later: Store their ID from the DB in session, 
         // in other words, log them in.
         	userServ.register(newUser, result);
-        	System.out.println(newUser.getBirthday());
+//        	System.out.println(newUser.getBirthday());
         	session.setAttribute("userId", newUser.getId());
         	System.out.println(newUser.getId());
         	session.setAttribute("userName", newUser.getUserName());
         	System.out.println(newUser.getUserName());
-        	return "redirect:/home";
+        	return "redirect:/books";
         
     }
     
@@ -117,24 +113,24 @@ public class HomeController {
         session.setAttribute("userName", user.getUserName());
         System.out.println(user.getId());
         System.out.println(user.getUserName());
-        return "redirect:/home";
+        return "redirect:/books";
     }
     
-    @GetMapping("/home")
-    public String home(Model model, HttpSession session) {
-	   	if(session.getAttribute("userId") == null) {
-	   		return "redirect:/";
-	   	}
-    		User user = userServ.getUser((Long) session.getAttribute("userId"));
-    		System.out.println(user);
-		String userName = (String) session.getAttribute("userName");
-		model.addAttribute("userName", userName);
-		Long userId = (Long) session.getAttribute("userId");
-		model.addAttribute("userId", userId);
-		model.addAttribute("user", user);
-		return "home.jsp";
-
-    }
+//    @GetMapping("/home")
+//    public String home(Model model, HttpSession session) {
+//	   	if(session.getAttribute("userId") == null) {
+//	   		return "redirect:/";
+//	   	}
+//    		User user = userServ.getUser((Long) session.getAttribute("userId"));
+//    		System.out.println(user);
+//		String userName = (String) session.getAttribute("userName");
+//		model.addAttribute("userName", userName);
+//		Long userId = (Long) session.getAttribute("userId");
+//		model.addAttribute("userId", userId);
+//		model.addAttribute("user", user);
+//		return "home.jsp";
+//
+//    }
     @GetMapping("/logout")
     public String logout(HttpSession session) {
     		session.invalidate();

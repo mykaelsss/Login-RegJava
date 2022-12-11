@@ -10,8 +10,8 @@
 </head>
 <body class="p-4">
 	<nav>
-		<h1 style="color:#9900FF">Welcome</h1>
-		<p>Join our growing community.</p>
+		<h1 style="color:#9900FF">Book Club</h1>
+		<p>A place for friends to share thoughts on books.</p>
 	</nav>
 	<div class="d-flex gap-5">
 		<form:form action="/register" method="post" modelAttribute="newUser">
@@ -21,7 +21,7 @@
 				<form:errors path="email"></form:errors>
 				<form:errors path="password"></form:errors>
 				<form:errors path="confirm"></form:errors>
-				<form:errors path="birthday"></form:errors>
+<%-- 				<form:errors path="birthday"></form:errors> --%>
 			</div>
 			<div>
 				<form:label path="userName">Username:</form:label>
@@ -39,7 +39,7 @@
 				<form:label path="confirm">Confirm:</form:label>
 				<form:input path="confirm"/>
 			</div>
-			<div>
+			<%-- <div>
 				<form:label path="birthday">Birthday:</form:label>
 				<form:input type="date" path="birthday" />
 			</div>
@@ -50,7 +50,7 @@
 				Python<form:checkbox path="knownLanguages" value="Python"/>
 				JavaScript<form:checkbox path="knownLanguages" value="JavaScript"/>
 				Ruby<form:checkbox path="knownLanguages" value="Ruby"/>
-			</div>
+			</div> --%>
 			<input type="submit" value="Submit"/>			
 		</form:form>
 		<form:form action="/login" method="post" modelAttribute="newLogin">
