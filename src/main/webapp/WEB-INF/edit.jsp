@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Create Book</title>
+<title>Edit Book</title>
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
@@ -36,8 +36,13 @@
 				<form:textarea path="thoughts" class="form-control"/>
 			</div> 
 			<form:input type="hidden" path="user" value="${userId}"/>
+			<form:input type="hidden" path="borrower" value="${borrower_id}" />
 			<input type="submit" value="Submit" class="btn btn-primary mt-2" />
 		</form:form>
+			 <form action="/books/${book.id}/delete" method="post" >
+		        <input type="hidden" value="delete" name="_method">
+		        <input type="submit" value="delete" class="btn btn-danger">
+	    	</form>
 	</main>
 </body>
 </html>

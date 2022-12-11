@@ -30,6 +30,9 @@
 			<h4>Books from everyone's shelves:</h4>
 			<a href="/books/new">+ Add to my shelf!</a>
 		</div>
+		<div class="d-flex justify-content-end align-items-end pt-3">
+			<a href="/books/bookmarket">View Book Market</a>
+		</div>
 		<table class="table">
 			<thead>
 				<tr>

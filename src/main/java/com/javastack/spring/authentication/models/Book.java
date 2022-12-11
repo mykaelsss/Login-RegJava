@@ -35,6 +35,9 @@ public class Book {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="borrower_id")
+	private User borrower;
     @Column(updatable=false)
     private Date createdAt;
     private Date updatedAt;
@@ -50,6 +53,20 @@ public class Book {
 	 public Book() {
 		 
 	 }
+	 
+	public Book(@NotBlank @Size(min = 3, max = 25, message = "Title must be between 3-25 characters.") String title,
+			@NotBlank @Size(min = 3, max = 25, message = "Author must be between 3-25 characters.") String author,
+			@NotBlank @Size(min = 5, max = 200, message = "Your thoughts must be between 5-200 characters.") String thoughts,
+			User user, User borrower, Date createdAt, Date updatedAt) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.thoughts = thoughts;
+		this.user = user;
+		this.borrower = borrower;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -85,6 +102,18 @@ public class Book {
 	}
 	public Date getUpdatedAt() {
 		return updatedAt;
+	}
+	public User getBorrower() {
+		return borrower;
+	}
+	public void setBorrower(User borrower) {
+		this.borrower = borrower;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	 
 }

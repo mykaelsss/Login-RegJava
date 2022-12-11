@@ -44,6 +44,9 @@ public class User {
     private String confirm;
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
     private List<Book> books;
+    @Column(updatable=false)
+    @OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+    private List<Book> borrowedBooks;
 //    @NotNull(message = "You must be at least 10 years old")
 //    @DateTimeFormat(pattern = "yyyy-MM-dd")
 //    private Date birthday;
@@ -106,6 +109,19 @@ public class User {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	public List<Book> getBooks() {
+		return books;
+	}
+	public void setBooks(List<Book> books) {
+		this.books = books;
+	}
+	public List<Book> getBorrowedBooks() {
+		return borrowedBooks;
+	}
+	public void setBorrowedBooks(List<Book> borrowedBooks) {
+		this.borrowedBooks = borrowedBooks;
+	}
+	
 ////	public Date getBirthday() {
 ////		return birthday;
 ////	}

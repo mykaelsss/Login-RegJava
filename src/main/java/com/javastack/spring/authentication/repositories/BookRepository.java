@@ -10,5 +10,9 @@ import com.javastack.spring.authentication.models.Book;
 @Repository
 public interface BookRepository extends CrudRepository<Book,Long> {
 	List<Book> findAll();
+
+	List<Book> findByBorrowerIdIs(Long id);
+
+	List<Book> findByBorrowerIdIsOrUserIdIs(Long borrowerId, Long userId);
 	
 }

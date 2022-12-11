@@ -1,5 +1,7 @@
 package com.javastack.spring.authentication.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,15 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.javastack.spring.authentication.models.Book;
 import com.javastack.spring.authentication.services.BookService;
+import com.javastack.spring.authentication.services.UserService;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
 	private final BookService bookServ;
+	private final UserService userServ;
 	
-	public BookController(BookService bookServ) {
+	public BookController(BookService bookServ,UserService userServ) {
 		this.bookServ = bookServ;
+		this.userServ = userServ;
 	}
 	
 	@GetMapping("")
@@ -83,5 +88,44 @@ public class BookController {
 			bookServ.update(book);
 			return "redirect:/books";
 		}
+	}
+	@GetMapping("/bookmarket")
+	public String bookmarket(HttpSession session, Model model) {
+	 
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			return "redirect:/logout";
+		}
+		
+		model.addAttribute("user", userServ.findById(userId));
+
+		List<Book> books = bookServ.unborrowedBooks(userServ.findById(userId));
+		model.addAttribute("books", books);
+
+		List<Book> myBooks = bookServ.borrowedBooks(userServ.findById(userId));
+		model.addAttribute("myBooks", myBooks);
+		 
+		return "bookMarket.jsp";
+	}
+	@GetMapping("/bookmarket/{bookId}")
+	public String borrowBook(@PathVariable("bookId") Long bookId, HttpSession session) {
+	 
+		Long userId = (Long) session.getAttribute("userId");
+		if(userId == null) {
+			return "redirect:/";
+		}
+		bookServ.addBorrower(bookServ.findBook(bookId), userServ.findById(userId));
+		 
+		return "redirect:/books/bookmarket";
+	}
+	@GetMapping("/bookmarket/return/{bookId}")
+	public String returnBook(@PathVariable("bookId") Long bookId, HttpSession session) {
+	 
+		if(session.getAttribute("userId") == null) {
+			return "redirect:/";
+		}
+		bookServ.removeBorrower(bookServ.findBook(bookId));
+		 
+		return "redirect:/books/bookmarket";
 	}
 }
